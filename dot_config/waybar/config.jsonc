@@ -1,0 +1,165 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "spacing": 4,
+    "modules-left": [
+        "custom/power",
+        "hyprland/workspaces",
+        "mpris"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "tray",
+        "power-profiles-daemon",
+        "cpu",
+        "temperature",
+        "memory",
+        "backlight",
+        "pulseaudio",
+        "pulseaudio#microphone",
+        "network",
+        "bluetooth",
+        "battery",
+        "custom/notification"
+    ],
+
+    // =======================================
+    // LEFT MODULES
+    // =======================================
+    "custom/power": {
+        "format": " ",
+        "tooltip": false,
+        "on-click": "~/.config/waybar/scripts/powermenu.sh"
+    },
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "persistent-workspaces": {
+            "1": [], "2": [], "3": [], "4": [], "5": []
+        },
+        "format": "{icon}",
+        "format-icons": {
+            "default": ""
+        }
+    },
+    "mpris": {
+        "format": "{player_icon} {dynamic}",
+        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "max-length": 40,
+        "player-icons": {
+            "default": " ",
+            "spotify": " ",
+            "firefox": " "
+        },
+        "status-icons": {
+            "paused": ""
+        }
+    },
+
+    // =======================================
+    // CENTER MODULES
+    // =======================================
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%A, %d %B %Y}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    },
+
+    // =======================================
+    // RIGHT MODULES
+    // =======================================
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+    "cpu": {
+        "format": "  {usage}%",
+        "interval": 2,
+        "on-click": "kitty --class floating_btop -e btop"
+    },
+    "memory": {
+        "format": "  {}%",
+        "interval": 2
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input", // You may need to adjust hwmon path
+        "critical-threshold": 80,
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["", "", ""]
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " Muted",
+        "on-click": "pavucontrol",
+        "format-icons": {
+            "default": ["", "", ""]
+        }
+    },
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "",
+        "format-source-muted": " ",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+    },
+    "network": {
+        "format-wifi": " ",
+        "format-ethernet": "󰈀  Wired",
+        "format-disconnected": "⚠  Offline",
+        "tooltip-format": "{essid}",
+        "on-click": "kitty --class floating_wifi -e wlctl"
+    },
+    "bluetooth": {
+        "format": "",
+        "format-connected": " {num_connections}",
+        "tooltip-format": "{controller_alias}\n{num_connections} connected",
+        "on-click": "kitty --class floating_bluetooth -e bluetui"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        // Displays percentage and power draw (W)
+        "format": "{icon}  {capacity}% ({power:.1f}W)",
+        "format-charging": "󰢝  {capacity}% ({power:.1f}W)",
+        "format-plugged": "  {capacity}%",
+        "format-icons": ["  ", "  ", "  ", "  ", "  "]
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='#e67e80'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='#e67e80'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='#e67e80'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='#e67e80'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+}
